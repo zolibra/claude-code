@@ -355,3 +355,11 @@ Impeccable 设计上下文保存在 `.impeccable.md` 中。设计 Web UI（RCS �
 ### 视觉参考
 
 Anthropic 公司的设计风格 — 干净、考究、温暖的底色。大量留白，以排版为核心。避免 AI 产品常见的设计套路（渐变文字、玻璃态、霓虹色）。
+
+## Cursor Cloud specific instructions
+
+- Bun is pinned in `.tool-versions` (`1.3.13`). Put `bun` and `bunx` on `/usr/local/bin`. Non-interactive login shells skip `~/.bashrc`, so `~/.bun/bin` is not on `PATH`.
+- Install dependencies with `CLAUDE_CODE_SKIP_CHROME_MCP_SETUP=1` (same as CI). Without it, postinstall tries to register a local Chrome profile.
+- Interactive commands (`bun run dev`, `doctor`) need a TTY. `--version`, `--help`, and `bun test` do not.
+- Dev mode may log `builtin rg unavailable` and then use `rg` from `PATH`. Postinstall still downloads the vendored binary into gitignored `src/utils/vendor/ripgrep/`. If `rg` is missing, install the `ripgrep` package.
+- CI checks: `bunx biome ci .`, `bun run typecheck`, `bun test`, `bun run build:vite`.
